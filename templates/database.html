@@ -1,0 +1,67 @@
+
+{%extends 'base.html'%}
+
+{%block content%}
+{%for message in get_flashed_messages()%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <b>{{message}}</b>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{%endfor%}
+    {% if name%}
+    {%else%}
+        <h1>User Audit</h1>
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <form method='POST'</br>
+                <!--create the CSRF token using the secret keyb previously created-->
+                {{form.hidden_tag()}}
+                <!--creats the label previosly stated in the stringField attached to the name-->
+                {{form.name.label(class="form-label")}}
+                <!--creates the field to be filled by the user-->
+                {{form.name(class="form-control")}}
+                <br>
+                {{form.username.label(class="form-label")}}
+                <!--creates the field to be filled by the user-->
+                {{form.username(class="form-control")}}
+                <br>
+                <br>
+                <!--creates the label stated in the age variable in the flask_test document-->
+                {{form.about_author.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.about_author(class="form-control")}}
+                <!--creates the label stated in the age variable in the flask_test document-->
+                {{form.age.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.age(class="form-control")}}
+                <br> 
+                {{form.email.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.email(class="form-control")}}
+                <br>
+                {{form.passion.label(class="form-label")}}
+                <!--creates the field to be filled by the user-->
+                {{form.passion(class="form-control")}}
+                <br>
+                <!--creates the label stated in the age variable in the flask_test document-->
+                {{form.password.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.password(class="form-control")}}
+                <br>
+                {{form.password2.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.password2(class="form-control")}}
+                <br>
+                {{form.submit(class="btn btn-secondary")}}
+            </form>  
+        </div>
+    {%endif%}
+<table class= "table table-striped">
+{%for our_user in our_users%}
+<tr>
+    <td>{{our_user.id}}.<a href="{{url_for('update_user', id=our_user.id)}}">
+    {{our_user.name}}</a>-{{our_user.username}}-{{our_user.age}}-{{our_user.email}}-{{our_user.hash_password}}-
+    <a href="{{url_for('delete_user', id=our_user.id)}}">Delete</a></td>
+</tr>
+{%endfor%}
+</table>
+{%endblock%}

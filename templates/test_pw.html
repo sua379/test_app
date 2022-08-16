@@ -1,0 +1,18 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{%for message in get_flashed_messages()%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{%endfor%}
+{% if email%}
+    Name: {{filter_user.name}}
+    Email: {{filter_user.email}}</br>
+    Password: {{filter_user.hash_password}}</br>
+        </br>
+{%else%}
+    <h2>How did you get here?, please go through the normal way</h2>
+{%endif%}
+{%endblock%}

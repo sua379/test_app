@@ -1,0 +1,81 @@
+
+{%extends 'base.html'%}
+
+{%block content%}
+{%for message in get_flashed_messages()%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <b>{{message}}</b>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{%endfor%}
+
+<div class="card">
+  <div class="card-header">
+    {{current_user.name}}
+  </div>
+  <div class="card-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <strong>ID:</strong>{{current_user.id}}<br>
+                    <strong>Age:</strong>{{current_user.age}}<br>
+                    <strong>Email:</strong>{{current_user.email}}<br>
+                    <strong>Bio:</strong>{{current_user.about_author}}<br>
+                    <strong>Profile pic:</strong>{{current_user.profile_pic}}<br>
+                    <strong>Data Joined:</strong>{{current_user.date}}<br></p>
+                    <a href="{{url_for('logout')}}" class="btn btn-primary"> Log Out</a>
+                    <a href="{{url_for('update_user', id=current_user.id)}}" class="btn btn-primary"> Edit User information</a>
+                    <a href="{{url_for('delete_user', id=current_user.id)}}" class="btn btn-danger"> Delete User</a>
+                </div>
+                <div class="col-4">
+                    <img src="{{url_for('static', filename='images/profile.jpeg')}}" align="right" width="150"</img> 
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+<br>
+<br>
+<div class="card">
+  <div class="card-header"></div>
+  <div class="card-body">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+            <form action="/dashboard" method="POST" enctype="multipart/form-data"</br>
+                <!--create the CSRF token using the secret keyb previously created-->
+                {{form.hidden_tag()}}
+                <!--creats the label previosly stated in the stringField attached to the name-->
+                {{form.name.label(class="form-label")}}
+                <!--creates the field to be filled by the user-->
+                {{form.name(class="form-control",value=name_to_update.name)}}
+                <br>
+                {{form.username.label(class="form-label")}}
+                <!--creates the field to be filled by the user-->
+                {{form.username(class="form-control",value=name_to_update.username)}}
+                <br>
+                <!--creates the label stated in the age variable in the flask_test document-->
+                {{form.about_author.label(class="form-label")}}
+                <!--creates the field to be filled by the user-->
+                {{form.about_author(class="form-control",value=name_to_update.about_author)}}
+                <br>
+                <!--creates the label stated in the age variable in the flask_test document-->
+                {{form.age.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.age(class="form-control",value=name_to_update.age)}}
+                <br>
+                {{form.passion.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.passion(class="form-control",value=name_to_update.passion)}}
+                <br> 
+                {{form.email.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.email(class="form-control",value=name_to_update.email)}}
+                <br>
+                {{form.profile_pic.label(class="form-label")}}
+                <!--creates the field to be filled by the user-->
+                {{form.profile_pic(class="form-control")}}
+                <br>
+                {{form.submit(class="btn btn-secondary")}}
+                <a href="{{url_for('delete_user', id=current_user.id)}}",type="button" class="btn btn-danger">Delete</a>
+            </form>  
+    </div>
+{%endblock%}

@@ -1,0 +1,40 @@
+t
+{%extends 'base.html'%}
+
+{%block content%}
+{%for message in get_flashed_messages()%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <b>{{message}}</b>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{%endfor%}
+    {% if title%}
+    {%else%}
+        <h1>Upload Blog Post</h1>
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <form method='POST'</br>
+                <!--create the CSRF token using the secret keyb previously created-->
+                {{form.hidden_tag()}}
+                <br>
+                <!--creates the label stated in the age variable in the flask_test document-->
+                {{form.title.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.title(class="form-control")}}
+                <br>
+                {{form.slug.label(class="form-label")}}
+                <!--creates the field to be filled by the user-->
+                {{form.slug(class="form-control")}}
+                <br>
+                <!--creates the label stated in the age variable in the flask_test document-->
+                {{form.content.label}}
+                <!--creates the field to be filled by the user-->
+                {{form.content(class="form-control", rows="5")}}
+                <br>
+                <br>
+                {{form.submit(class="btn btn-secondary")}}
+            </form> 
+             {{ ckeditor.load() }}
+             {{ ckeditor.config(name='content') }} 
+        </div>
+    {%endif%}
+{%endblock%}
