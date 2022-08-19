@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['flask_test_forms.py', 'templates\\Blog_post.html', 'templates\\update_user.html', 'flask_test.py', 'templates\\navbar.html', 'templates\\search.html']
+recent_files = ['flask_test_forms.py', 'app.py', 'templates\\dashboard.html', 'templates\\search.html', 'templates\\post.html', 'templates\\test_pw.html', 'templates\\submited_posts.html', 'templates\\navbar.html', 'templates\\admin.html', 'requirements.txt', 'Procfile', '.gitignore']
 
