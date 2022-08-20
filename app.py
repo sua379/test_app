@@ -293,7 +293,8 @@ def delete_user(id):
     form=UserForm()
     user_to_delete=db_model.query.get_or_404(id)
     current_users=db_model.query.order_by(db_model.date)
-    if current_users.id==id:
+    user_id=id
+    if current_users.id==user_id:
         #if form.validate_on_submit():
             #return render_template('database.html',
                           #  name=name,
