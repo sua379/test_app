@@ -103,7 +103,7 @@ def dashboard():
         #add the newly collected information to the database
         try:
             profile_pic=secure_filename(name_to_update.profile_pic.filename)
-            name_to_update.profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER']), profile_pic)
+            name_to_update.profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], profile_pic))
             name_to_update.profile_pic=str(uuid.uuid1())+ '_' + profile_pic 
             db.session.commit()
             #display a message that aknowledges that the record has been sucessfully collected
