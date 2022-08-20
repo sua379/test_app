@@ -32,7 +32,7 @@ ckeditor = CKEditor(app)
 app.config['SQLALCHEMY_DATABASE_URI']= 'postgres://jgjvusceixdcud:34118260ddd50899f27a7eea8d236b8c5e1dfcf14c2de705f567618ee5d33a70@ec2-44-195-100-240.compute-1.amazonaws.com:5432/de2m36p9ko3677'
 #create a secret key that protects all forms
 app.config['SECRET_KEY']='the secret key that i am using for this test app'
-UPLOAD_FOLDER='static/images/'
+UPLOAD_FOLDER='static\images\'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
