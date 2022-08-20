@@ -289,17 +289,16 @@ def database():
 @app.route('/delete/<int:id>') 
 @login_required
 def delete_user(id):
-    name=None 
-    form=UserForm()
-    user_to_delete=db_model.query.get_or_404(id)
-    current_users=db_model.query.order_by(db_model.date)
-    user_id=id
-    if current_users.id==user_id:
-        #if form.validate_on_submit():
-            #return render_template('database.html',
-                          #  name=name,
-                          #  our_users=current_users,
-                           ## form=form)
+    if current_user.id==id:
+        name=None 
+        form=UserForm()
+        user_to_delete=db_model.query.get_or_404(id)
+        current_users=db_model.query.order_by(db_model.date)
+            #if form.validate_on_submit():
+                #return render_template('database.html',
+                              #  name=name,
+                              #  our_users=current_users,
+                               ## form=form)
         try:
             db.session.delete(user_to_delete)
             db.session.commit()
