@@ -27,9 +27,15 @@
                     <a href="{{url_for('update_user', id=current_user.id)}}" class="btn btn-primary"> Edit User information</a>
                     <a href="{{url_for('delete_user', id=current_user.id)}}" class="btn btn-danger"> Delete User</a>
                 </div>
+                {%if current_user.profile_pic%}
                 <div class="col-4">
-                    <img src="{{url_for('static', filename='images/profile.jpeg')}}" align="right" width="150"</img> 
+                    <img src="{{url_for('static', filename='images/'+current_user.profile_pic)}}" align="right" width="150"</img> 
                 </div>
+                {%else%}
+                <div class="col-4">
+                    <img src="{{url_for('static', filename='images/default.png')}}" align="right" width="150"</img> 
+                </div>
+                {%endif%}
             </div>
         </div>
   </div>

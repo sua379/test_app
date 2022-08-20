@@ -99,12 +99,16 @@ def dashboard():
         name_to_update.username=request.form['username']
         name_to_update.about_author=request.form['about_author']
         name_to_update.profile_pic=request.files['profile_pic']
-
+        #ensure that that uploaded file is very secure
+        profile_pic=secure_filename(name_to_update.profile_pic.filename)
+        #create a unique name for the uploaded file
+        name_to_update.profile_pic=str(uuid.uuid1())+ '_' + profile_pic
+        #collect the uploaed file into a variable
+        saver=request.files['profile_pic']
         #add the newly collected information to the database
         try:
-            profile_pic=secure_filename(name_to_update.profile_pic.filename)
-            name_to_update.profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], profile_pic))
-            name_to_update.profile_pic=str(uuid.uuid1())+ '_' + profile_pic 
+            #save the uploaded file
+            saver.save(os.path.join(app.config['UPLOAD_FOLDER'], profile_pic))
             db.session.commit()
             #display a message that aknowledges that the record has been sucessfully collected
             flash('Record updated successfully')
