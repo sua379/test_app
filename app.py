@@ -293,24 +293,28 @@ def delete_user(id):
     form=UserForm()
     user_to_delete=db_model.query.get_or_404(id)
     current_users=db_model.query.order_by(db_model.date)
-    if form.validate_on_submit():
-        return render_template('database.html',
-                        name=name,
-                        our_users=current_users,
-                        form=form)
-    try:
-        db.session.delete(user_to_delete)
-        db.session.commit()
-        flash('User deleted successfully')
-        return render_template('database.html',
-                           name=name,
-                           our_users=current_users,
-                           form=form)
-    except:
-        flash('Some very unexpected happened...are you trying to hack us?...please do not do that')
-        return render_template('database.html',name=name,
+    if current_users.id==id:
+        #if form.validate_on_submit():
+            #return render_template('database.html',
+                          #  name=name,
+                          #  our_users=current_users,
+                           ## form=form)
+        try:
+            db.session.delete(user_to_delete)
+            db.session.commit()
+            flash('User deleted successfully')
+            return render_template('database.html',
+                               name=name,
                                our_users=current_users,
                                form=form)
+        except:
+            flash('Some very unexpected happened...are you trying to hack us?...please do not do that')
+            return render_template('database.html',name=name,
+                                   our_users=current_users,
+                                   form=form)
+    else:
+        flash('You are not authorized to delete this page')
+        return redirect(url_for('dashboard'))
             
 @app.route('/user')
 def see():
