@@ -29,7 +29,7 @@
                 </div>
                 {%if current_user.profile_pic%}
                 <div class="col-4">
-                    <img src="{{url_for('static', filename='images/'+current_user.profile_pic)}}" align="right" width="150"</img> 
+                    <img src="{{url_for('static', filename='images/'+current_user.profile_pic)}}" align="right" width="150" height="150"</img> 
                 </div>
                 {%else%}
                 <div class="col-4">
