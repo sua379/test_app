@@ -105,10 +105,10 @@ def dashboard():
         name_to_update.profile_pic=str(uuid.uuid1())+ '_' + profile_pic
         #collect the uploaed file into a variable
         saver=request.files['profile_pic']
+        saver.save(os.path.join(app.config['UPLOAD_FOLDER'], profile_pic))
         #add the newly collected information to the database
         try:
             #save the uploaded file
-            saver.save(os.path.join(app.config['UPLOAD_FOLDER'], profile_pic))
             db.session.commit()
             #display a message that aknowledges that the record has been sucessfully collected
             flash('Record updated successfully')
