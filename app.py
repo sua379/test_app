@@ -50,7 +50,7 @@ login_manager.login_view='login'
 @login_required
 def admin():
     id=current_user.id
-    if id==21:
+    if id==1:
         return render_template('admin.html') 
     else:
         flash('Only the admin can access this page')
@@ -171,7 +171,7 @@ def blog_post():
 def edit_post(id):
     form=BlogForm()
     blog_info=Posts.query.get_or_404(id)
-    if current_user.id==blog_info.poster.id:
+    if current_user.id==blog_info.poster.id or current_user.id==1:
         if form.validate_on_submit():
             flash('Blog post has been updated')
             blog_info.Blog_content=form.content.data
@@ -199,7 +199,7 @@ def delete_post(id):
     author_id=blog_info.poster.id
     user_id=current_user.id
     blog_posts=Posts.query.order_by(Posts.date)
-    if user_id==author_id:
+    if user_id==author_id or user_id==1:
         try:
             db.session.delete(blog_info)
             db.session.commit()
