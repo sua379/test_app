@@ -2,11 +2,10 @@
 
 {%block content%}
 <center>
-<b>Result of scraped information from the web.</b>
+<b>{{name}} to this Random test.</b>
 {% if info %}
-    <b>Check out the latest news for today</b>
     <br/>
-    	<em style="color: green; font-size: 2em;">{{info|upper}}!!! you my man</em>
+    	<em style="color: green; font-size: 2em;">{{info|upper}}</em>
     <br/>
     <p>{{infob|title|safe}}</p>
         {% else %}

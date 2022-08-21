@@ -19,9 +19,6 @@ import uuid
 
 
 
-#just testing
-
-
 app=Flask(__name__)
 #Initializing the CKEditor with the flask app
 ckeditor = CKEditor(app)
@@ -29,11 +26,11 @@ ckeditor = CKEditor(app)
 #Old SQLight database
 #app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///users.database'
 #New MYSQL database...for production purpose.
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgres://jgjvusceixdcud:34118260ddd50899f27a7eea8d236b8c5e1dfcf14c2de705f567618ee5d33a70@ec2-44-195-100-240.compute-1.amazonaws.com:5432/de2m36p9ko3677'
+password=input('please enter your password')
+app.config['SQLALCHEMY_DATABASE_URI']=f'mysql+pymysql://root:{password}@localhost/log_database'
 #create a secret key that protects all forms
 app.config['SECRET_KEY']='the secret key that i am using for this test app'
-UPLOAD_FOLDER='static/images/'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+UPLOAD_FOLDER='static/images'
 app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
 db=SQLAlchemy(app)
@@ -50,7 +47,7 @@ login_manager.login_view='login'
 @login_required
 def admin():
     id=current_user.id
-    if id==1:
+    if id==21:
         return render_template('admin.html') 
     else:
         flash('Only the admin can access this page')
@@ -100,16 +97,14 @@ def dashboard():
         name_to_update.username=request.form['username']
         name_to_update.about_author=request.form['about_author']
         name_to_update.profile_pic=request.files['profile_pic']
-        #ensure that that uploaded file is very secure
         profile_pic=secure_filename(name_to_update.profile_pic.filename)
-        #create a unique name for the uploaded file
-        name_to_update.profile_pic=str(uuid.uuid1())+ '_' + profile_pic
-        #collect the uploaed file into a variable
-        saver=request.files['profile_pic']
-        saver.save(os.path.join(app.config['UPLOAD_FOLDER'], profile_pic))
+        name_to_update.profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER']), profile_pic)
+        name_to_update.profile_pic=str(uuid.uuid1())+ '_' + profile_pic 
         #add the newly collected information to the database
         try:
-            #save the uploaded file
+            profile_pic=secure_filename(name_to_update.profile_pic.filename)
+            name_to_update.profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER']), profile_pic)
+            name_to_update.profile_pic=str(uuid.uuid1())+ '_' + profile_pic 
             db.session.commit()
             #display a message that aknowledges that the record has been sucessfully collected
             flash('Record updated successfully')
@@ -171,7 +166,7 @@ def blog_post():
 def edit_post(id):
     form=BlogForm()
     blog_info=Posts.query.get_or_404(id)
-    if current_user.id==blog_info.poster.id or current_user.id==1:
+    if current_user.id==blog_info.poster.id:
         if form.validate_on_submit():
             flash('Blog post has been updated')
             blog_info.Blog_content=form.content.data
@@ -199,7 +194,7 @@ def delete_post(id):
     author_id=blog_info.poster.id
     user_id=current_user.id
     blog_posts=Posts.query.order_by(Posts.date)
-    if user_id==author_id or user_id==1:
+    if user_id==author_id:
         try:
             db.session.delete(blog_info)
             db.session.commit()
@@ -294,37 +289,33 @@ def database():
 @app.route('/delete/<int:id>') 
 @login_required
 def delete_user(id):
-    if current_user.id==id:
-        name=None 
-        form=UserForm()
-        user_to_delete=db_model.query.get_or_404(id)
-        current_users=db_model.query.order_by(db_model.date)
-            #if form.validate_on_submit():
-                #return render_template('database.html',
-                              #  name=name,
-                              #  our_users=current_users,
-                               ## form=form)
-        try:
-            db.session.delete(user_to_delete)
-            db.session.commit()
-            flash('User deleted successfully')
-            return render_template('database.html',
-                               name=name,
+    name=None 
+    form=UserForm()
+    user_to_delete=db_model.query.get_or_404(id)
+    current_users=db_model.query.order_by(db_model.date)
+    if form.validate_on_submit():
+        return render_template('database.html',
+                        name=name,
+                        our_users=current_users,
+                        form=form)
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        flash('User deleted successfully')
+        return render_template('database.html',
+                           name=name,
+                           our_users=current_users,
+                           form=form)
+    except:
+        flash('Some very unexpected happened...are you trying to hack us?...please do not do that')
+        return render_template('database.html',name=name,
                                our_users=current_users,
                                form=form)
-        except:
-            flash('Some very unexpected happened...are you trying to hack us?...please do not do that')
-            return render_template('database.html',name=name,
-                                   our_users=current_users,
-                                   form=form)
-    else:
-        flash('You are not authorized to delete this page')
-        return redirect(url_for('dashboard'))
             
 @app.route('/user')
 def see():
-    name='Welcome'
-    stuff='Try out the web inteface and report your experience...'
+    name='there'
+    stuff='But you <strong>probably</strong> know that already'
     return render_template('index.html',
                            info=name, 
                            infob=stuff) 
@@ -417,7 +408,7 @@ class db_model(db.Model, UserMixin):
     id=db.Column(db.Integer, primary_key=True, autoincrement=True)
     name=db.Column(db.String(200), nullable=False)
     username=db.Column(db.String(50), nullable=False, unique=True)
-    about_author=db.Column(db.Text(), nullable=True)
+    about_author=db.Column(db.Text, nullable=True)
     passion=db.Column(db.String(200), nullable=False)
     email=db.Column(db.String(150), nullable=False,unique=True)
     age=db.Column(db.Integer, nullable=False)
@@ -450,7 +441,7 @@ class Posts(db.Model):
     Title=db.Column(db.String(200), nullable=False)
     #Author=db.Column(db.String(200), nullable=False)
     Slug=db.Column(db.String(200), nullable=False,unique=True)
-    Blog_content=db.Column(db.Text(), nullable=False)
+    Blog_content=db.Column(db.Text, nullable=False)
     date=db.Column(db.DateTime, default=datetime.utcnow)
     
     #create a foreign key that will connect to the db_model table using the id
