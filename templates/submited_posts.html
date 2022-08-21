@@ -15,7 +15,7 @@
 	By: {{blog.poster.name}}<br>
 	Date: {{blog.date}}<br>
 	</small>
-	<a href="{{url_for('Blog_Post', id=blog.id)}}", class="btn btn-secondary">{{blog.Title}}</a>
+	<a href="{{url_for('Blog_Post', id=blog.id)}}">{{blog.Title}}</a>
 	{%if blog.poster.about_author%}
 		About Author: {{blog.poster.about_author}}<br>
 	{%endif%}
