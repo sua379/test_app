@@ -6,10 +6,40 @@
 <div class="shadow p-3 mb-5 bg-body rounded">
 	<h2>{{post.Title}}<br></h2>
 	<small>
+	{%if post.poster.about_author%}
 	By: {{post.Author}}<br>
 	Date: {{post.date}}<br>
 	</small>
 	{{post.Blog_content}}<br><br>
+		
+	<div class="card mb-3">
+		<div class="row no-gutters">
+			<div class="col-md-2">
+				{%if post.poster.profile_pic%}
+                    <img src="{{url_for('static', filename='images/'+post.poster.profile_pic)}}" align="right" width="150"</img> 
+                {%else%}
+                    <img src="{{url_for('static', filename='images/default.png')}}" align="right" width="150"</img> 
+                {%endif%}
+            </div>
+            
+			<div class="col-md-10">
+				<div class='card-body'>
+					<h5 class="card-title">
+						{{post.poster.name}}
+					</h5>
+					<p class="class-text">
+						{%if post.poster.about_author%}
+    					About Author: {{post.poster.about_author}}
+        				{%else%}
+   						Bio has not been added...
+    					{%endif%}				
+					</p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 	<a href="{{url_for('Blog_posts_page')}}", class="btn btn-secondary">Back</a>
 	<a href="{{url_for('delete_post', id=post.id)}}", class="btn btn-danger">Delete Post</a><br>
 	<hr><br>
