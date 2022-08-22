@@ -11,7 +11,7 @@ from datetime import datetime
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from flask_test_forms import UserForm, LoginForm, NamerForm, testform, BlogForm, SearchForm
+from flask_test_forms import UserForm, LoginForm, NamerForm, BlogForm, SearchForm
 from flask_ckeditor import CKEditor
 from werkzeug.utils import secure_filename
 import os
