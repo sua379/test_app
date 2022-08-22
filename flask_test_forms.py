@@ -39,11 +39,6 @@ class NamerForm(FlaskForm):
     profile_pic=FileField('Profile Picture')
     submit=SubmitField('Submit')
 
-class testform(FlaskForm):
-    password=PasswordField('Password', validators=[DataRequired()])
-    email=EmailField('Email', validators=[DataRequired()])
-    submit=SubmitField('Submit')
-
 #define a form that collects the blog information from the users.
 class BlogForm(FlaskForm):
     title=StringField('Blog Title', validators=[DataRequired()])

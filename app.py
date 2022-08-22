@@ -346,37 +346,7 @@ def Blog_Post(id):
     #post=Posts.query.filter_by(id=id).first()
     
     return render_template('post.html',post=post)
-#
-@app.route('/name', methods=['GET','POST'])
-def name():
-    #assign an original value to the name variable
-    email=None
-    password=None
-    form=testform()
-    passed=None
-    data=db_model()
-    #check if the form has been filled, then change the value of the name variable to the 
-    #inputed name.
-    if form.validate_on_submit():
-        email=form.email.data
-        password=form.password.data
-        filter_user=data.query.filter_by(email=email).first()
-        passed=check_password_hash(filter_user,password)
-        form.email.data=''
-        form.password.data=''
-        flash('Thanks for filling the form')
-        return render_template('test_pw.html',
-                           email=email,
-                           password=password,
-                           passed=passed,
-                           filter_user=filter_user)
-    #flash('Something went wrong, check the password you submitted')
-    return render_template('name.html',
-                           name=name,
-                           email=email,
-                           password=password,
-                           passed=passed,
-                           form=form)
+
 #defining a function that allows you to pass variables into the base file of your application
 @app.context_processor
 def base():
