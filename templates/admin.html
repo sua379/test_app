@@ -10,4 +10,8 @@
 
 <h1><b>Admin Page...</b></h1>
 
+{%for user in users%}
+    {{user.name}} | {{user.email}} | {{user.age}}<br>
+{%endfor%}
+
 {%endblock%}

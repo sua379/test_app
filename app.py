@@ -50,8 +50,10 @@ login_manager.login_view='login'
 @login_required
 def admin():
     id=current_user.id
+    users=db_model()
     if id==1:
-        return render_template('admin.html') 
+        users=users.query.order_by(users.id)
+        return render_template('admin.html', users=users) 
     else:
         flash('Only the admin can access this page')
         return redirect(url_for('dashboard'))
