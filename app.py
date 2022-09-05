@@ -140,13 +140,13 @@ def logout():
 @login_required 
 def user_project():
     form=ProjectForm
-    
     if form.validate_on_submit():
         flash('Your request have been collected sucessfully, you will get a reply in three days')
         return render_template('project_page.html', form=form)
     else:
         flash('please check the information you are submitting...something went wrong')
         return redirect(url_for('user_project'))
+    return redirect(url_for('user_project'))
     
 
 #defing the function that interacts with the web page collecting blog information
