@@ -51,5 +51,6 @@ class ProjectForm(FlaskForm):
     username=StringField('Username', validators=[DataRequired()])
     project_description=TextAreaField('Project Description',validators=[DataRequired()])
     budget=IntegerField('Budget', validators=[DataRequired()])
+    submit=SubmitField('Submit')
     
                          
