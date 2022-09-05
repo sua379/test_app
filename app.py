@@ -146,7 +146,8 @@ def user_project():
     else:
         flash('please check the information you are submitting...something went wrong')
         return redirect(url_for('user_project'))
-    return redirect(url_for('user_project'))
+    return render_template('project_page.html', form=form)
+    
     
 
 #defing the function that interacts with the web page collecting blog information
