@@ -136,7 +136,7 @@ def logout():
     logout_user()
     flash('You have been logged out...never come back')
     return redirect(url_for('login'))
-@app.route('/user_project', methods=['GET'])
+@app.route('/user_project', methods=['GET','POST'])
 @login_required 
 def user_project():
     form=ProjectForm()
