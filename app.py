@@ -11,7 +11,7 @@ from datetime import datetime
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from flask_test_forms import UserForm, LoginForm, NamerForm, BlogForm, SearchForm
+from flask_test_forms import UserForm, LoginForm, NamerForm, BlogForm, SearchForm, ProjectForm
 from flask_ckeditor import CKEditor
 from werkzeug.utils import secure_filename
 import os
@@ -136,6 +136,18 @@ def logout():
     logout_user()
     flash('You have been logged out...never come back')
     return redirect(url_for('login'))
+@app.route('/user_project', methods=['GET'])
+@login_required 
+def user_project():
+    form=ProjectForm
+    
+    if form.validate_on_submit():
+        flash('Your request have been collected sucessfully, you will get a reply in three days')
+        return render_template('project_page.html', form=form)
+    else:
+        flash('please check the information you are submitting...something went wrong')
+        return redirect(url_for('user_project'))
+    
 
 #defing the function that interacts with the web page collecting blog information
 @app.route('/submit_blog_post', methods=['GET','POST'])
