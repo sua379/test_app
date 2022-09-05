@@ -139,7 +139,7 @@ def logout():
 @app.route('/user_project', methods=['GET'])
 @login_required 
 def user_project():
-    form=ProjectForm
+    form=ProjectForm()
     if form.validate_on_submit():
         flash('Your request have been collected sucessfully, you will get a reply in three days')
         return render_template('project_page.html', form=form)
