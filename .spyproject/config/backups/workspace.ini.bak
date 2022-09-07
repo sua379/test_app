@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['..\\..\\trial_project.py', 'app.py', 'flask_test_forms.py', 'templates\\project_page.html', 'templates\\navbar.html', 'templates\\login.html', 'templates\\database.html']
+recent_files = ['..\\..\\trial_project.py', 'app.py', 'flask_test_forms.py', 'templates\\project_page.html', 'templates\\navbar.html', 'templates\\login.html', 'templates\\database.html', '..\\..\\school_football_project\\school_football_project\\spiders\\fixtures.py', '..\\..\\..\\wikispider\\wikispider\\spiders\\scrapy_movie.py']
 
